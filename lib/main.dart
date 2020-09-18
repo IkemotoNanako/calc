@@ -34,6 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
   CALC_TYPE _calcType;
   int _displayPow = 0;
   bool _decimalFlag = false;
+  var _displayCalcNum;
+
 
   void _setNum(double num) {
     _displayPow = 0;
@@ -61,14 +63,17 @@ class _MyHomePageState extends State<MyHomePage> {
         _calcType = null;
       });
     }
+    if (_displayCalcNum != "0"){
+      _displayCalcNum = _displayCalcNum + _displayNumber.toString();
+    }
   }
-
   void _calcBtnPressed(CALC_TYPE type) {
     _setNumber = _displayNumber;
     _firstNum = _setNumber;
     _setNumber = 0;
     _displayNumber = 0;
     _calcType = type;
+
   }
 
   void _calcAdd() {
@@ -132,6 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _calcType = null;
       _displayPow = 0;
       _decimalFlag = false;
+      _displayCalcNum = "0";
     });
   }
   void _clearEntryNum() {
@@ -141,6 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _calcType = null;
       _displayPow = 0;
       _decimalFlag = false;
+      _displayCalcNum = "0";
     });
   }
   void _invertedNum() {
@@ -148,6 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _displayNumber = -_displayNumber;
       _setNumber = -_setNumber;
     });
+    _displayCalcNum = _displayNumber.toString();
   }
 
   @override
@@ -161,7 +169,15 @@ class _MyHomePageState extends State<MyHomePage> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           Container(
-            height: 20,
+            child: Text(_displayCalcNum!=null ?
+            _displayCalcNum:"0",
+              style: TextStyle(
+                fontSize: 40,
+                color: Colors.black12,
+              ),
+            ),
+          ),
+          Container(
             child: _displayPow > 0 ? Text(
               "10^${_displayPow.toString()}",
               style: TextStyle(
@@ -171,382 +187,586 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           Text(
             _displayNumber == _displayNumber.toInt()?
-                _displayNumber.toInt().toString()
-            :_displayNumber.toString(),
+            _displayNumber.toInt().toString()
+                :_displayNumber.toString(),
             style: TextStyle(
               fontSize: 60,
             ),
+          ),
+          Container(
+            height: 100,
           ),
           Expanded(
             child: Column(
               children: <Widget>[
                 Expanded(
                   child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(),
-                      ),
-                      Expanded(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(10.0),
                         child: SizedBox(
-                          width: double.infinity,
-                          height: double.infinity,
+                          width: 80,
+                          height: 80,
                           child: FlatButton(
-                            child:Text("CE",
+                            color: Colors.grey[200],
+                            child: Text("e",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                fontSize: 50,
+                                fontSize: 35,
                               ),
                             ),
-                            onPressed:() {
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){
                               _clearEntryNum();
                             },
                           ),
-                        )
+                        ),
                       ),
-                      Expanded(
+                      Padding(
+                        padding: EdgeInsets.all(10.0),
                         child: SizedBox(
-                          width: double.infinity,
-                          height: double.infinity,
+                          width: 80,
+                          height: 80,
                           child: FlatButton(
-                            child: Text("C",
+                            color: Colors.grey[200],
+                            child: Text("π",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                fontSize: 60,
+                                fontSize: 35,
                               ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){
+                              _clearEntryNum();
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: FlatButton(
+                            color: Colors.grey[200],
+                            child: Text("sin",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 35,
+                              ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){
+                              _clearEntryNum();
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: FlatButton(
+                            color: Colors.grey[200],
+                            child: Text("deg",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 28,
+                              ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){
+                              _clearEntryNum();
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10,0,10,10),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: FlatButton(
+                            color : Colors.red[50],
+                            child: Text("c",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 50,
+                                  color: Colors.red
+                              ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
                             ),
                             onPressed: (){
                               _clearNum();
                             },
                           ),
-                        )
+                        ),
                       ),
-                      Expanded(
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: FlatButton(
-                              child: Text("÷",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 60,
-                                ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10,0,10,10),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: FlatButton(
+                            color: Colors.grey[200],
+                            child: Text("(",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 40,
                               ),
-                              onPressed: () {
-                                _calcBtnPressed(CALC_TYPE.div);
-                              },
                             ),
-                          )
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){},
+                          ),
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: FlatButton(
-                              child: Text("７",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 60,
-                                ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10,0,10,10),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: FlatButton(
+                            color: Colors.grey[200],
+                            child: Text(")",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 40,
                               ),
-                              onPressed: (){
-                                _setNum(7);
-                              },
                             ),
-                          )
-                      ),
-                      Expanded(
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: FlatButton(
-                              child: Text("８",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 60,
-                                ),
-                              ),
-                              onPressed: (){
-                                _setNum(8);
-                              },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
                             ),
-                          )
+                            onPressed: (){},
+                          ),
+                        ),
                       ),
-                      Expanded(
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: FlatButton(
-                              child: Text("９",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 60,
-                                ),
-                              ),
-                              onPressed: (){
-                                _setNum(9);
-                              },
-                            ),
-                          )
-                      ),
-                      Expanded(
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: FlatButton(
-                              child: Text("×",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 60,
-                                ),
-                              ),
-                              onPressed: () {
-                                _calcBtnPressed(CALC_TYPE.multi);
-                              },
-                            ),
-                          )
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: FlatButton(
-                              child: Text("４",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 60,
-                                ),
-                              ),
-                              onPressed: (){
-                                _setNum(4);
-                              },
-                            ),
-                          )
-                      ),
-                      Expanded(
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: FlatButton(
-                              child: Text("５",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 60,
-                                ),
-                              ),
-                              onPressed: (){
-                                _setNum(5);
-                              },
-                            ),
-                          )
-                      ),
-                      Expanded(
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: FlatButton(
-                              child: Text("６",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 60,
-                                ),
-                              ),
-                              onPressed: (){
-                                _setNum(6);
-                              },
-                            ),
-                          )
-                      ),
-                      Expanded(
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: FlatButton(
-                              child: Text("-",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 60,
-                                ),
-                              ),
-                              onPressed: (){
-                                _calcBtnPressed(CALC_TYPE.sub);
-                              },
-                            ),
-                          )
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: FlatButton(
-                              child: Text("１",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 60,
-                                ),
-                              ),
-                              onPressed: (){
-                                _setNum(1);
-                              },
-                            ),
-                          )
-                      ),
-                      Expanded(
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: FlatButton(
-                              child: Text("２",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 60,
-                                ),
-                              ),
-                              onPressed: (){
-                                _setNum(2);
-                              },
-                            ),
-                          )
-                      ),
-                      Expanded(
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: FlatButton(
-                              child: Text("３",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 60,
-                                ),
-                              ),
-                              onPressed: (){
-                                _setNum(3);
-                              },
-                            ),
-                          )
-                      ),
-                      Expanded(
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: FlatButton(
-                              child: Text("+",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 60,
-                                ),
-                              ),
-                              onPressed: (){
-                                _calcBtnPressed(CALC_TYPE.add);
-                              },
-                            ),
-                          )
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: FlatButton(
-                              child: Text("+/-",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10,0,10,10),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: FlatButton(
+                            color: Colors.orange,
+                            child: Text("/",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
                                   fontSize: 40,
-                                ),
+                                  color: Colors.white
                               ),
-                              onPressed: (){
-                                _invertedNum();
-                              },
                             ),
-                          )
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){
+                              _calcBtnPressed(CALC_TYPE.div);
+                              setState(() {
+                                _displayCalcNum = _firstNum.toString() + "÷";
+                              });
+                            },
+                          ),
+                        ),
                       ),
-                      Expanded(
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: FlatButton(
-                              child: Text("０",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 60,
-                                ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10,0,10,10),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: FlatButton(
+                            color: Colors.grey[200],
+                            child: Text("7",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 40,
                               ),
-                              onPressed: (){
-                                _setNum(0);
-                              },
                             ),
-                          )
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){
+                              _setNum(7);
+                            },
+                          ),
+                        ),
                       ),
-                      Expanded(
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: FlatButton(
-                              child: Text(".",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 60,
-                                ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10,0,10,10),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: FlatButton(
+                            color: Colors.grey[200],
+                            child: Text("8",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 40,
                               ),
-                              onPressed: (){
-                                _decimalFlag = true;
-                              },
                             ),
-                          )
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){
+                              _setNum(8);
+                            },
+                          ),
+                        ),
                       ),
-                      Expanded(
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: FlatButton(
-                              child: Text("=",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 60,
-                                ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10,0,10,10),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: FlatButton(
+                            color: Colors.grey[200],
+                            child: Text("9",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 40,
                               ),
-                              onPressed: () {
-                                switch (_calcType) {
-                                  case CALC_TYPE.add:
-                                    _calcAdd();
-                                    break;
-                                  case CALC_TYPE.sub:
-                                    _calcSub();
-                                    break;
-                                  case CALC_TYPE.multi:
-                                    _calcMulti();
-                                    break;
-                                  case CALC_TYPE.div:
-                                    _calcDiv();
-                                    break;
-                                  default:
-                                    break;
-                                }
-                              },
                             ),
-                          )
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){
+                              _setNum(9);
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10,0,10,10),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: FlatButton(
+                            color: Colors.orange,
+                            child: Text("×",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 40,
+                                  color: Colors.white
+                              ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){
+                              _calcBtnPressed(CALC_TYPE.multi);
+                              setState(() {
+                                _displayCalcNum = _firstNum.toString() + "×";
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10,0,10,10),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: FlatButton(
+                            color: Colors.grey[200],
+                            child: Text("4",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 40,
+                              ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){
+                              _setNum(4);
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10,0,10,10),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: FlatButton(
+                            color: Colors.grey[200],
+                            child: Text("5",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 40,
+                              ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){
+                              _setNum(5);
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10,0,10,10),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: FlatButton(
+                            color: Colors.grey[200],
+                            child: Text("6",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 40,
+                              ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){
+                              _setNum(6);
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10,0,10,10),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: FlatButton(
+                            color: Colors.orange,
+                            child: Text("-",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 60,
+                                  color: Colors.white
+                              ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){
+                              _calcBtnPressed(CALC_TYPE.sub);
+                              setState(() {
+                                _displayCalcNum = _firstNum.toString() + "-";
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10,0,10,10),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: FlatButton(
+                            color: Colors.grey[200],
+                            child: Text("1",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 40,
+                              ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){
+                              _setNum(1);
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10,0,10,10),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: FlatButton(
+                            color: Colors.grey[200],
+                            child: Text("2",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 40,
+                              ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){
+                              _setNum(2);
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10,0,10,10),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: FlatButton(
+                            color: Colors.grey[200],
+                            child: Text("3",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 40,
+                              ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){
+                              _setNum(3);
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10,0,10,10),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: FlatButton(
+                            color: Colors.orange,
+                            child: Text("+",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 40,
+                                  color: Colors.white
+                              ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){
+                              _calcBtnPressed(CALC_TYPE.add);
+                              setState(() {
+                                _displayCalcNum = _firstNum.toString() + "+";
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10,0,10,10),
+                        child: SizedBox(
+                          width: 180,
+                          height: 80,
+                          child: FlatButton(
+                            color: Colors.grey[200],
+                            child: Text("0",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 40,
+                              ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){
+                              _setNum(0);
+                            },
+                          ),
+                        ),
+                      ),
+
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10,0,10,10),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: FlatButton(
+                            color: Colors.grey[200],
+                            child: Text(".",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 40,
+                              ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){
+                              _decimalFlag = true;
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10,0,10,10),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: FlatButton(
+                            color: Colors.green[400],
+                            child: Text("=",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 40,
+                                  color: Colors.white
+                              ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)
+                            ),
+                            onPressed: (){
+                              switch (_calcType) {
+                                case CALC_TYPE.add:
+                                  _calcAdd();
+                                  break;
+                                case CALC_TYPE.sub:
+                                  _calcSub();
+                                  break;
+                                case CALC_TYPE.multi:
+                                  _calcMulti();
+                                  break;
+                                case CALC_TYPE.div:
+                                  _calcDiv();
+                                  break;
+                                default:
+                                  break;
+                              }
+                            },
+                          ),
+                        ),
                       ),
                     ],
                   ),
